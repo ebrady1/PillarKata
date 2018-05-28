@@ -4,12 +4,14 @@
  * @Email:  ed@ebrady.net
  * @Project: Pillar Technologies Roman Numeral Kata
  * @Filename: check_RomanNumeral.h
- * @Last modified by:   Ed Brady
- * @Last modified time: 2018-05-28T08:13:50-04:00
+ * @Last modified by:   ed
+ * @Last modified time: 2018-05-28T09:13:10-04:00
  */
 
-ifndef CHECK_ROMANNUMERAL_H
+#ifndef CHECK_ROMANNUMERAL_H
 #define CHECK_ROMANNUMERAL_H
+
+#include <check.h>
 
 extern Suite* roman_numeral_obj_suite();
 

@@ -5,10 +5,11 @@
  * @Project: Pillar Technologies Roman Numeral Kata
  * @Filename: RomanNumeral.c
  * @Last modified by:   ed
- * @Last modified time: 2018-05-28T08:36:54-04:00
+ * @Last modified time: 2018-05-28T09:14:00-04:00
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "RomanNumeral.h"
 
 //Roman Numeral Private Object data
@@ -30,7 +31,7 @@ RomanNumeral* RomanNumeral_new()
   RomanNumeral* rnObj = (RomanNumeral*) malloc(sizeof(RomanNumeral));
   if ((NULL != rnObj) && (NULL != privateData))
   {
-    rnObj->private = privateData;
+    rnObj->privateData = privateData;
     returnVal = rnObj;
   }
 	return returnVal;
