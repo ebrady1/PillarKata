@@ -14,6 +14,7 @@ all:
 clean:
 	rm -rf bin
 	rm -rf obj
+	rm -rf lib
 
 tests:
 	$(ECHO) Building all tests
