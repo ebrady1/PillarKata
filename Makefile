@@ -10,6 +10,11 @@ all:
 	@$(ECHO) ---------- Building Tests ----------
 	@$(ECHO)
 	@cd test; $(MAKE)
+	@$(ECHO)
+	@$(ECHO) ---------- Running Tests ----------
+	@$(ECHO)
+	@bin/RomanNumeralCalcTests
+	
 
 clean:
 	rm -rf bin

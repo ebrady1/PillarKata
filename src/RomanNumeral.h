@@ -5,20 +5,41 @@
  * @Project: Pillar Technologies Roman Numeral Kata
  * @Filename: RomanNumeral.h
  * @Last modified by:   ed
- * @Last modified time: 2018-05-28T08:56:42-04:00
+ * @Last modified time: 2018-05-28T09:45:50-04:00
  */
 
 #ifndef ROMANNUMERAL_H
 #define ROMANNUMERAL_H
 
-typedef struct
+typedef struct RomanNumeral
 {
-  void* privateData;
-  int (*ToInt)();
-  char* (*ToString)();
+  int value;
+  const char* romanValue; 
+  int (*ToInt)(struct RomanNumeral* obj);
+  char* (*ToString)(struct RomanNumeral* obj);
+  int (*FromRomanString)(struct RomanNumeral*, const char* str);
+  int (*FromDecimalString)(struct RomanNumeral*, const char* str);
 }RomanNumeral;
 
-extern RomanNumeral* RomanNumeral_new();
+//Instantiate a new Roman Numeral object 
+//Object can be either empty or initialized from a Roman Numeral Strig
+//If a non standard Roman Numeral string is set, then an empty object 
+//is created
+extern RomanNumeral* RomanNumeral_new(const char* string);
+
+//Free an existing object
 extern void RomanNumeral_free(RomanNumeral* obj);
+
+//Return the value of the object as integer
+extern int RomanNumeral_ToInt(RomanNumeral* obj);
+
+//Return the Roman Number String
+extern char* RomanNumeral_ToString(RomanNumeral* obj);
+
+//Set the value of the object from a RomanNumeral string
+extern int RomanNumeral_FromRomanString(RomanNumeral* obj, const char* str);
+
+//Set the value of the object from a Decimal string
+extern int RomanNumeral_FromDecimalString(RomanNumeral* obj, const char* str);
 
 #endif
