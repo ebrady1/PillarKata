@@ -15,10 +15,6 @@ typedef struct RomanNumeral
 {
   int value;
   const char* romanValue; 
-  int (*ToInt)(struct RomanNumeral* obj);
-  char* (*ToString)(struct RomanNumeral* obj);
-  int (*FromRomanString)(struct RomanNumeral*, const char* str);
-  int (*FromDecimalString)(struct RomanNumeral*, const char* str);
 }RomanNumeral;
 
 //Instantiate a new Roman Numeral object 

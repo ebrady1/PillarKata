@@ -41,110 +41,110 @@ START_TEST (CreateRomanNumeralWithValidRomanCharacters)
   ck_assert(rn != NULL);
   if (NULL != rn)
   {
-     rn->FromRomanString(rn,"I");
-     ck_assert_int_eq(rn->ToInt(rn), 1);
+     RomanNumeral_FromRomanString(rn,"I");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 1);
      
-     rn->FromRomanString(rn,"II");
-     ck_assert_int_eq(rn->ToInt(rn), 2);
+     RomanNumeral_FromRomanString(rn,"II");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 2);
      
-     rn->FromRomanString(rn,"III");
-     ck_assert_int_eq(rn->ToInt(rn), 3);
+     RomanNumeral_FromRomanString(rn,"III");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 3);
 
-     rn->FromRomanString(rn,"IV");
-     ck_assert_int_eq(rn->ToInt(rn), 4);
+     RomanNumeral_FromRomanString(rn,"IV");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 4);
      
-     rn->FromRomanString(rn,"V");
-     ck_assert_int_eq(rn->ToInt(rn), 5);
+     RomanNumeral_FromRomanString(rn,"V");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 5);
      
-     rn->FromRomanString(rn,"VI");
-     ck_assert_int_eq(rn->ToInt(rn), 6);
+     RomanNumeral_FromRomanString(rn,"VI");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 6);
      
-     rn->FromRomanString(rn,"VII");
-     ck_assert_int_eq(rn->ToInt(rn), 7);
+     RomanNumeral_FromRomanString(rn,"VII");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 7);
      
-     rn->FromRomanString(rn,"VIII");
-     ck_assert_int_eq(rn->ToInt(rn), 8);
+     RomanNumeral_FromRomanString(rn,"VIII");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 8);
      
-     rn->FromRomanString(rn,"IX");
-     ck_assert_int_eq(rn->ToInt(rn), 9);
+     RomanNumeral_FromRomanString(rn,"IX");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 9);
      
-     rn->FromRomanString(rn,"X");
-     ck_assert_int_eq(rn->ToInt(rn), 10);
+     RomanNumeral_FromRomanString(rn,"X");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 10);
      
-     rn->FromRomanString(rn,"XI");
-     ck_assert_int_eq(rn->ToInt(rn), 11);
+     RomanNumeral_FromRomanString(rn,"XI");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 11);
      
-     rn->FromRomanString(rn,"XII");
-     ck_assert_int_eq(rn->ToInt(rn), 12);
+     RomanNumeral_FromRomanString(rn,"XII");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 12);
      
-     rn->FromRomanString(rn,"XIII");
-     ck_assert_int_eq(rn->ToInt(rn), 13);
+     RomanNumeral_FromRomanString(rn,"XIII");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 13);
      
-     rn->FromRomanString(rn,"XIV");
-     ck_assert_int_eq(rn->ToInt(rn), 14);
+     RomanNumeral_FromRomanString(rn,"XIV");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 14);
      
-     rn->FromRomanString(rn,"XV");
-     ck_assert_int_eq(rn->ToInt(rn), 15);
+     RomanNumeral_FromRomanString(rn,"XV");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 15);
      
-     rn->FromRomanString(rn,"XVI");
-     ck_assert_int_eq(rn->ToInt(rn), 16);
+     RomanNumeral_FromRomanString(rn,"XVI");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 16);
      
-     rn->FromRomanString(rn,"XVII");
-     ck_assert_int_eq(rn->ToInt(rn), 17);
+     RomanNumeral_FromRomanString(rn,"XVII");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 17);
     
-     rn->FromRomanString(rn,"XVIV");
-     ck_assert_int_eq(rn->ToInt(rn), 19);
+     RomanNumeral_FromRomanString(rn,"XVIV");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 19);
      
-     rn->FromRomanString(rn,"XX");
-     ck_assert_int_eq(rn->ToInt(rn), 20);
+     RomanNumeral_FromRomanString(rn,"XX");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 20);
      
-     rn->FromRomanString(rn,"XXX");
-     ck_assert_int_eq(rn->ToInt(rn), 30);
+     RomanNumeral_FromRomanString(rn,"XXX");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 30);
      
-     rn->FromRomanString(rn,"XL");
-     ck_assert_int_eq(rn->ToInt(rn), 40);
+     RomanNumeral_FromRomanString(rn,"XL");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 40);
      
-     rn->FromRomanString(rn,"L");
-     ck_assert_int_eq(rn->ToInt(rn), 50);
+     RomanNumeral_FromRomanString(rn,"L");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 50);
      
-     rn->FromRomanString(rn,"LX");
-     ck_assert_int_eq(rn->ToInt(rn), 60);
+     RomanNumeral_FromRomanString(rn,"LX");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 60);
      
-     rn->FromRomanString(rn,"LXV");
-     ck_assert_int_eq(rn->ToInt(rn), 65);
+     RomanNumeral_FromRomanString(rn,"LXV");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 65);
      
-     rn->FromRomanString(rn,"LXVI");
-     ck_assert_int_eq(rn->ToInt(rn), 66);
+     RomanNumeral_FromRomanString(rn,"LXVI");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 66);
      
-     rn->FromRomanString(rn,"LXL");
-     ck_assert_int_eq(rn->ToInt(rn), 90);
+     RomanNumeral_FromRomanString(rn,"LXL");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 90);
      
-     rn->FromRomanString(rn,"C");
-     ck_assert_int_eq(rn->ToInt(rn), 100);
+     RomanNumeral_FromRomanString(rn,"C");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 100);
      
-     rn->FromRomanString(rn,"VC");
-     ck_assert_int_eq(rn->ToInt(rn), 95);
+     RomanNumeral_FromRomanString(rn,"VC");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 95);
      
-     rn->FromRomanString(rn,"CX");
-     ck_assert_int_eq(rn->ToInt(rn), 110);
+     RomanNumeral_FromRomanString(rn,"CX");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 110);
      
-     rn->FromRomanString(rn,"D");
-     ck_assert_int_eq(rn->ToInt(rn), 500);
+     RomanNumeral_FromRomanString(rn,"D");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 500);
 
-     rn->FromRomanString(rn,"LD");
-     ck_assert_int_eq(rn->ToInt(rn), 450);
+     RomanNumeral_FromRomanString(rn,"LD");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 450);
      
-     rn->FromRomanString(rn,"M");
-     ck_assert_int_eq(rn->ToInt(rn), 1000);
+     RomanNumeral_FromRomanString(rn,"M");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 1000);
 
-     rn->FromRomanString(rn,"CM");
-     ck_assert_int_eq(rn->ToInt(rn), 900);
+     RomanNumeral_FromRomanString(rn,"CM");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 900);
      
-     rn->FromRomanString(rn,"MV");
-     ck_assert_int_eq(rn->ToInt(rn), 1005);
+     RomanNumeral_FromRomanString(rn,"MV");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 1005);
 
-     rn->FromRomanString(rn,"MMMCMXCIX");
-     ck_assert_int_eq(rn->ToInt(rn), 3999);
+     RomanNumeral_FromRomanString(rn,"MMMCMXCIX");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 3999);
     RomanNumeral_free(rn);
   
   }

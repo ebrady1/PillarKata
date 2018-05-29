@@ -13,6 +13,81 @@
 #include <string.h>
 #include "RomanNumeral.h"
 
+
+// ----------  Static (Private) object functions --------------
+
+//Decode a single character
+static int RomanNumeral_decodeRomanCharacter(char c)
+{
+   int decodedDigit = 0;
+   //Look at the current character and decode
+   switch(c)
+   {
+      //Roman Numeral I = 1
+      case 'I':
+      {
+         decodedDigit = 1;
+         break;
+      }
+      
+      //Roman Numeral V = 5
+      case 'V':
+      {
+         decodedDigit = 5;
+         break;
+      }
+
+      //Roman Numeral X = 10
+      case 'X':
+      {
+         decodedDigit = 10;
+         break;
+      }
+
+      //Roman Numeral L = 50
+      case 'L':
+      {
+         decodedDigit = 50;
+         break;
+      }
+
+      //Roman Numeral C = 100
+      case 'C':
+      {
+         decodedDigit = 100;
+         break;
+      }
+
+      //Roman Numeral D = 500
+      case 'D':
+      {
+         decodedDigit = 500;
+         break;
+      }
+
+      //Roman Numeral M = 1000
+      case 'M':
+      {
+         decodedDigit = 1000;
+         break;
+      }
+     
+     //If we get here, then an invalid digit was
+     //encountered.  Mark the deoded digit value as
+     //0 
+      default:
+      {
+         decodedDigit = 0;
+         break;
+      }
+   }
+
+   return decodedDigit;
+}
+
+
+// ----------  Public object functions --------------
+
 //Instatiate a new Roman Numeral object and setup private data.
 RomanNumeral* RomanNumeral_new(const char* value)
 {
@@ -22,10 +97,6 @@ RomanNumeral* RomanNumeral_new(const char* value)
   if (NULL != rnObj)
   {
      rnObj->value = 0;
-     rnObj->ToInt = RomanNumeral_ToInt;
-     rnObj->ToString = RomanNumeral_ToString;
-     rnObj->FromRomanString = RomanNumeral_FromRomanString;
-     rnObj->FromDecimalString = RomanNumeral_FromDecimalString;
      returnVal = rnObj;
   }
 
@@ -50,6 +121,7 @@ void RomanNumeral_free(RomanNumeral* obj)
   }
 }
 
+
 //Return the value of the object as integer
 int RomanNumeral_ToInt(RomanNumeral* obj)
 {
@@ -71,81 +143,54 @@ int RomanNumeral_ToInt(RomanNumeral* obj)
       else if ((obj->romanValue == NULL) || (strcmp(obj->romanValue,"") != 0))
       {
          charCount = strlen(obj->romanValue);
+
+         //Iterate each individual charact.  Decode each character
+         //per a standard Roman Numeral decoding paradigm. 
          while((charCount - charIndex ) != 0)
          {
-            char current = obj->romanValue[charIndex];
+            decodedDigit = 
+               RomanNumeral_decodeRomanCharacter(obj->romanValue[charIndex]);
 
-            switch(current)
-            {
-               case 'I':
-               {
-                  decodedDigit = 1;
-                  break;
-               }
-               
-               case 'V':
-               {
-                  decodedDigit = 5;
-                  break;
-               }
-
-               case 'X':
-               {
-                  decodedDigit = 10;
-                  break;
-               }
-
-               case 'L':
-               {
-                  decodedDigit = 50;
-                  break;
-               }
-
-               case 'C':
-               {
-                  decodedDigit = 100;
-                  break;
-               }
-
-               case 'D':
-               {
-                  decodedDigit = 500;
-                  break;
-               }
-
-               case 'M':
-               {
-                  decodedDigit = 1000;
-                  break;
-               }
-               
-               default:
-               {
-                  decodedDigit = 0;
-                  break;
-               }
-            }
-
+            //If an invalid digit was received, then invalidate the 
+            //encoded value by setting it 0 and return. 
             if (0 == decodedDigit )
             { 
                decodedValue = 0;
                break;
             }
 
+            //Look at each digit as it is decode along with the 
+            //previously decoded digit to determine how to handle
+            //sequences like IV, IX, etc.  
+            
+
+            //If a previous digit has not been processed, then move then do 
+            //nothing, just store the digit and decide what to do on the next
+            //loop iteration. 
             if (lastDecodedDigit == 0)
             {
                lastDecodedDigit = decodedDigit;
             }
             else
             {
+               //A previous digit was stored on the last loop iteration, decide
+               //what to do. 
+          
+              //If the last digit is smaller than the current digit, process it
+              //by taking the current digit minus the previous digit.       
                if (lastDecodedDigit < decodedDigit)
                {
                   decodedValue += decodedDigit - lastDecodedDigit;
+                  // Since both the last digit and current digit where
+                  // processed, reset the last digit value.
                   lastDecodedDigit = 0;
                   decodedDigit = 0;
                }
                else
                {
+                  //The last digit is equal to or larger than the current one.
+                  //Process the last digit and save off the current one for
+                  //future processing
                   decodedValue += lastDecodedDigit;
                   lastDecodedDigit = decodedDigit;
                }
@@ -154,9 +199,12 @@ int RomanNumeral_ToInt(RomanNumeral* obj)
             charIndex++;
          }
 
+         //No more Roman Numeral digits to process.   Add in the last one
          decodedValue += decodedDigit;
       }
    }
+
+   //Save off the value
    obj->value = decodedValue;
    return decodedValue;
 }
