@@ -11,13 +11,13 @@ LINKLIBS := $(patsubst %, $(LIBDIR)/%, $(_LINKLIBS))
 all: $(BINDIR)/$(MAIN)
 
 $(BINDIR)/$(MAIN): $(ODIR) $(BINDIR) $(LIBDIR) $(OBJS) $(LIBDIR)/$(LIB)
-	$(CC) -o $@ $(LIBDIR)/$(LIB) $(LINKLIBS) $(CFLAGS) 
+	$(CC) $(CFLAGS) -o $@ $(LIBDIR)/$(LIB) $(LINKLIBS) $(LINKFLAGS) 
 
 $(LIBDIR)/$(LIB): $(LIBDIR)
 	$(LIBLINK) $(LINKARGS) $(LIBDIR)/$(LIB) $(OBJS)
 
 $(ODIR)/%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $<
+	$(CC) -g -O0 -std=c11 -c -o $@ $<
 
 $(ODIR) $(BINDIR) $(LIBDIR):
 	mkdir $@

@@ -4,4 +4,6 @@ bin/
 lib/
 obj/
 *.swp
+tasks.json
+launch.json
 

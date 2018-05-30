@@ -11,10 +11,84 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "RomanNumeral.h"
 
 
 // ----------  Static (Private) object functions --------------
+typedef struct 
+{
+  const char* romanString;
+  int decValue;
+}COMMON_VAL;
+
+static COMMON_VAL COMMON_VALUES[] = 
+{
+  { "M",    1000  },
+  { "MM",   2000  },
+  { "MMM",  3000  },
+  { "IM",   999   },
+  { "VM",   995   },
+  { "XM",   990   },
+  { "LM",   950   },
+  { "CM",   900   },
+  { "DM",   500   },
+  { "DCCC", 800   },
+  { "DCC",  700   },
+  { "DC",   600   },
+  { "ID",   499   },
+  { "VD",   495   },
+  { "CD",   400   },
+  { "LD",   450   },
+  { "XD",   490   },
+  { "VD",   495   },
+  { "ID",   499   },
+  { "D",    500   },
+  { "XC",   90    },
+  { "VC",   95    },
+  { "IC",   99    },
+  { "CCC",  300   },
+  { "CC",   200   },
+  { "C",    100   },
+  { "LXL",  90    },
+  { "LVL",  95    },
+  { "LIL",  99    },
+  { "LXXX", 80    },
+  { "LXX ", 70    },
+  { "LX",   60    },
+  { "IL",   49    },
+  { "VL",   45    },
+  { "XL",   40    },
+  { "L",    50    },
+  { "IX",   9     },
+  { "XXX",  30    },
+  { "XX",   20    },
+  { "X",    10    },
+  { "VIII", 8     },
+  { "VII",  7     },
+  { "IV",   4     },
+  { "V",    5     },
+  { "IV",   4     },
+  { "VI",   6     },
+  { "III",  3     },
+  { "II",   2     },
+  { "I",    1     },
+};
+
+static const 
+size_t COMMON_ARRAY_SIZE = (sizeof(COMMON_VALUES) / sizeof(COMMON_VAL));
+
+static bool RomanNumeral_startsWith(const char* searchStr, const char* targetStr)
+{
+  size_t lenSearch = strlen(searchStr);
+  size_t lenTarget = strlen(targetStr);
+  bool retVal = 
+    (lenTarget < lenSearch) ? 
+      false : 
+      (strncmp(targetStr, searchStr, lenSearch) == 0);
+
+  return retVal;
+}
 
 //Decode a single character
 static int RomanNumeral_decodeRomanCharacter(char c)
@@ -125,88 +199,36 @@ void RomanNumeral_free(RomanNumeral* obj)
 //Return the value of the object as integer
 int RomanNumeral_ToInt(RomanNumeral* obj)
 {
-   int decodedValue = 0;
-   int charCount = 0;
-   int charIndex = 0;
-   int lastDecodedDigit = 0;
-   int decodedDigit = 0;
+  int curIndex = 0;
+  int retVal = 0;
 
-  //Verify an object was passed in 
-   if (NULL != obj)
-   {
-      //If our stored decimal value is not 0, return the
-      //existing value, if not reparse the string 
-      if (0 != obj->value)
+  size_t lenTarget = strlen(obj->romanValue);
+  const char* romanStrPtr = obj->romanValue; 
+  
+  for (int j = 0; j < COMMON_ARRAY_SIZE; j++)
+  {
+    COMMON_VAL* commonVal = &(COMMON_VALUES[j]);
+    if (RomanNumeral_startsWith(commonVal->romanString, (obj->romanValue + curIndex)))
+    {
+      retVal += commonVal->decValue;
+      int searchLen = strlen(commonVal->romanString);
+      if ((curIndex + searchLen) <= lenTarget)
       {
-         decodedValue = obj->value;
+        curIndex += searchLen;
       }
-      else if ((obj->romanValue == NULL) || (strcmp(obj->romanValue,"") != 0))
+      else
       {
-         charCount = strlen(obj->romanValue);
-
-         //Iterate each individual charact.  Decode each character
-         //per a standard Roman Numeral decoding paradigm. 
-         while((charCount - charIndex ) != 0)
-         {
-            decodedDigit = 
-               RomanNumeral_decodeRomanCharacter(obj->romanValue[charIndex]);
-
-            //If an invalid digit was received, then invalidate the 
-            //encoded value by setting it 0 and return. 
-            if (0 == decodedDigit )
-            { 
-               decodedValue = 0;
-               break;
-            }
-
-            //Look at each digit as it is decode along with the 
-            //previously decoded digit to determine how to handle
-            //sequences like IV, IX, etc.  
-            
-
-            //If a previous digit has not been processed, then move then do 
-            //nothing, just store the digit and decide what to do on the next
-            //loop iteration. 
-            if (lastDecodedDigit == 0)
-            {
-               lastDecodedDigit = decodedDigit;
-            }
-            else
-            {
-               //A previous digit was stored on the last loop iteration, decide
-               //what to do. 
-          
-              //If the last digit is smaller than the current digit, process it
-              //by taking the current digit minus the previous digit.       
-               if (lastDecodedDigit < decodedDigit)
-               {
-                  decodedValue += decodedDigit - lastDecodedDigit;
-                  // Since both the last digit and current digit where
-                  // processed, reset the last digit value.
-                  lastDecodedDigit = 0;
-                  decodedDigit = 0;
-               }
-               else
-               {
-                  //The last digit is equal to or larger than the current one.
-                  //Process the last digit and save off the current one for
-                  //future processing
-                  decodedValue += lastDecodedDigit;
-                  lastDecodedDigit = decodedDigit;
-               }
-            }
-
-            charIndex++;
-         }
-
-         //No more Roman Numeral digits to process.   Add in the last one
-         decodedValue += decodedDigit;
+        break;
       }
-   }
+    }
+  }
 
-   //Save off the value
-   obj->value = decodedValue;
-   return decodedValue;
+  if (curIndex != lenTarget)
+  {
+    retVal = 0;
+  }
+
+  return retVal;
 }
 
 //Return the Roman Number String
