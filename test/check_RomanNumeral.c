@@ -8,12 +8,15 @@
  * @Last modified time: 2018-05-29T05:13:33-04:00
  */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <check.h>
 #include "../src/RomanNumeral.h"
 
 //Test creation of an empty Roman Numeral object
 START_TEST (CreateEmptyRomanNumeral)
 {
+  printf("-- CreateEmptyRomanNumeral --\n");
   //Instantiate a Roman Numeral object and check if a pointer to the object
   //was returned
   RomanNumeral* rn =  RomanNumeral_new(NULL);
@@ -38,119 +41,121 @@ END_TEST
 //Variations of smaller digits occuring before larger digits.
 START_TEST (CreateRomanNumeralWithValidRomanCharacters)
 {
-   //Initialize a Roman Numeral object with a value of 1
-   //Perform this for each valid character type
+  printf("-- CreateRomanNumeralWithValidRomanCharacters --\n");
+  
+  //Initialize a Roman Numeral object with a value of 1
+  //Perform this for each valid character type
   RomanNumeral* rn = RomanNumeral_new("");
   ck_assert(rn != NULL);
   if (NULL != rn)
   {
      RomanNumeral_FromRomanString(rn,"I");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 1);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 1);
 
      RomanNumeral_FromRomanString(rn,"II");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 2);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 2);
 
      RomanNumeral_FromRomanString(rn,"III");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 3);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 3);
 
      RomanNumeral_FromRomanString(rn,"IV");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 4);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 4);
 
      RomanNumeral_FromRomanString(rn,"V");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 5);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 5);
 
      RomanNumeral_FromRomanString(rn,"VI");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 6);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 6);
 
      RomanNumeral_FromRomanString(rn,"VII");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 7);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 7);
 
      RomanNumeral_FromRomanString(rn,"VIII");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 8);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 8);
      
      RomanNumeral_FromRomanString(rn,"VIV");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 9);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 9);
 
      RomanNumeral_FromRomanString(rn,"IX");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 9);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 9);
 
      RomanNumeral_FromRomanString(rn,"X");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 10);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 10);
 
      RomanNumeral_FromRomanString(rn,"XI");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 11);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 11);
 
      RomanNumeral_FromRomanString(rn,"XII");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 12);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 12);
 
      RomanNumeral_FromRomanString(rn,"XIII");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 13);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 13);
 
      RomanNumeral_FromRomanString(rn,"XIV");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 14);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 14);
 
      RomanNumeral_FromRomanString(rn,"XV");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 15);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 15);
 
      RomanNumeral_FromRomanString(rn,"XVI");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 16);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 16);
 
      RomanNumeral_FromRomanString(rn,"XVII");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 17);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 17);
 
      RomanNumeral_FromRomanString(rn,"XVIV");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 19);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 19);
 
      RomanNumeral_FromRomanString(rn,"XX");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 20);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 20);
 
      RomanNumeral_FromRomanString(rn,"XXX");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 30);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 30);
 
      RomanNumeral_FromRomanString(rn,"XL");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 40);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 40);
 
      RomanNumeral_FromRomanString(rn,"L");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 50);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 50);
 
      RomanNumeral_FromRomanString(rn,"LX");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 60);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 60);
 
      RomanNumeral_FromRomanString(rn,"LXV");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 65);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 65);
 
      RomanNumeral_FromRomanString(rn,"LXVI");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 66);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 66);
 
      RomanNumeral_FromRomanString(rn,"LXL");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 90);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 90);
 
      RomanNumeral_FromRomanString(rn,"C");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 100);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 100);
 
      RomanNumeral_FromRomanString(rn,"VC");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 95);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 95);
 
      RomanNumeral_FromRomanString(rn,"CX");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 110);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 110);
 
      RomanNumeral_FromRomanString(rn,"D");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 500);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 500);
 
      RomanNumeral_FromRomanString(rn,"LD");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 450);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 450);
 
      RomanNumeral_FromRomanString(rn,"M");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 1000);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 1000);
 
      RomanNumeral_FromRomanString(rn,"CM");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 900);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 900);
 
      RomanNumeral_FromRomanString(rn,"MV");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 1005);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 1005);
 
      RomanNumeral_FromRomanString(rn,"MMMCMXCIX");
-     ck_assert_int_eq(RomanNumeral_ToInt(rn), 3999);
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 3999);
     RomanNumeral_free(rn);
 
   }
@@ -160,6 +165,8 @@ END_TEST
 //Test various scenarios of creating INVALID Roman Numeral objects,
 START_TEST (CreateRomanNumeralWithInvalidRomanCharacters)
 {
+  printf("-- CreateRomanNumeralWithInvalidRomanCharacters --\n");
+  
   //Initialize a Roman Numeral object with a value of 1
   //Perform this for a number of Invalid Roman Numeral Types
   RomanNumeral* rn = RomanNumeral_new("");
@@ -167,34 +174,34 @@ START_TEST (CreateRomanNumeralWithInvalidRomanCharacters)
   if (NULL != rn)
   {
     RomanNumeral_FromRomanString(rn,"A");
-    ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
+    ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 0);
     
     RomanNumeral_FromRomanString(rn,"Z");
-    ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
+    ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 0);
 
     RomanNumeral_FromRomanString(rn,"MMMM");
-    ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
+    ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 0);
 
     RomanNumeral_FromRomanString(rn,"IIV");
-    ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
+    ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 0);
 
     RomanNumeral_FromRomanString(rn,"");
-    ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
+    ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 0);
     
     RomanNumeral_FromRomanString(rn,"I1");
-    ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
+    ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 0);
     
     RomanNumeral_FromRomanString(rn,"IVX");
-    ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
+    ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 0);
 
     RomanNumeral_FromRomanString(rn,"VV");
-    ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
+    ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 0);
 
     RomanNumeral_FromRomanString(rn,"LL");
-    ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
+    ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 0);
     
     RomanNumeral_FromRomanString(rn,NULL);
-    ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
+    ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 0);
   
     RomanNumeral_free(rn);
   }
@@ -206,6 +213,7 @@ END_TEST
 //Variations of smaller digits occuring before larger digits.
 START_TEST (CreateRomanNumeralWithDecimalValue)
 {
+  printf("-- CreateRomanNumeralWithDecimalValue --\n");
   int decodeVal = 0;
   bool success = false;
   
@@ -219,7 +227,7 @@ START_TEST (CreateRomanNumeralWithDecimalValue)
       success = RomanNumeral_FromDecimal(obj,j);
       ck_assert(true == success);
 
-      decodeVal = RomanNumeral_ToInt(obj);
+      decodeVal = RomanNumeral_ToDecimal(obj);
       ck_assert_int_eq(j,decodeVal);
     }
 
@@ -241,42 +249,49 @@ START_TEST (CreateRomanNumeralWithDecimalValue)
 
 END_TEST
 
-
 START_TEST (RomanNumeralAdditionOps)
 {
+  printf("-- RomanNumeralAdditionOps --\n");
   bool success = false;
-  
-  RomanNumeral* val1 = RomanNumeral_new("");
-  RomanNumeral* val2 = RomanNumeral_new("");
-  RomanNumeral* answer = RomanNumeral_new("");
-  ck_assert((NULL != val1) && (NULL != val2) && (NULL != answer));
+  bool success1 = false;
+  bool success2 = false;
 
-  if ((NULL != val1) && (NULL != val2))
+  unsigned int randDec1;
+  unsigned int randDec2; 
+  RomanNumeral* obj1 = RomanNumeral_new("");
+  RomanNumeral* obj2 = RomanNumeral_new("");
+  RomanNumeral* answer = RomanNumeral_new("");
+  ck_assert((NULL != obj1) && (NULL != obj2) && (NULL != answer));
+
+  if ((NULL != obj1) && (NULL != obj2))
   {
-    //Iterate through all possible combinations
-    for (unsigned int j = 0; j < 2000; j++)
+
+    //Seed the test with 10000 random numbers
+    for (unsigned int j = 1; j < 10000; j++)
     {
-      for (unsigned 
+      randDec1 = (unsigned int)rand() % 2000;
+      randDec2 = (unsigned int)rand() % 2000;
+
+      randDec1 = (randDec1 == 0) ? 1 : randDec1;
+      randDec2 = (randDec2 == 0) ? 1 : randDec2;
       
-      
-      int k = 0; k < 2000; k++)
+      success1 = RomanNumeral_FromDecimal(obj1, randDec1);
+      success2 = RomanNumeral_FromDecimal(obj2, randDec2);
+
+      ck_assert(success1 && success2);
+      if (success1 && success2)
       {
-        bool success1 = RomanNumeral_FromDecimal(val1, j);
-        bool success2 = RomanNumeral_FromDecimal(val2, k);
-        if (success1 && success2)
+        success = RomanNumeral_Add(obj1, obj2, answer);
+        ck_assert(success);
+        if (success)
         {
-          success = RomanNumeral_Add(val1, val2, answer);
+          success = RomanNumeral_Equals(answer, randDec1 + randDec2);
           ck_assert(success);
-          if (success)
-          {
-            success = RomanNumeral_Equals(answer, j+k);
-            ck_assert(success);
-          }
         }
       }
     }
-    RomanNumeral_free(val1);
-    RomanNumeral_free(val2);
+    RomanNumeral_free(obj1);
+    RomanNumeral_free(obj2);
     RomanNumeral_free(answer);
   }
 }
@@ -284,40 +299,62 @@ END_TEST
 
 START_TEST (RomanNumeralSubtractionOps)
 {
+  printf("-- RomanNumeralSubtractionOps --\n");
   bool success = false;
-  
-  RomanNumeral* val1 = RomanNumeral_new("");
-  RomanNumeral* val2 = RomanNumeral_new("");
-  RomanNumeral* answer = RomanNumeral_new("");
-  ck_assert((NULL != val1) && (NULL != val2) && (NULL != answer));
+  bool success1 = false;
+  bool success2 = false;
 
-  if ((NULL != val1) && (NULL != val2))
+  unsigned int randDec1;
+  unsigned int randDec2; 
+  unsigned int randScratch; 
+  RomanNumeral* obj1 = RomanNumeral_new("");
+  RomanNumeral* obj2 = RomanNumeral_new("");
+  RomanNumeral* answer = RomanNumeral_new("");
+  ck_assert((NULL != obj1) && (NULL != obj2) && (NULL != answer));
+
+  if ((NULL != obj1) && (NULL != obj2))
   {
-    //Iterate through all possible combinations
-    for (unsigned int j = 3999; j > 2000; j--)
+
+    //Seed the test with 10000 random numbers 
+    for (unsigned int j = 1; j < 10000; j++)
     {
-      for (unsigned int k = 0; k < 2000; k++)
+      randDec1 = (unsigned int)rand() % 4000;
+      randDec2 = (unsigned int)rand() % 4000;
+
+      randDec1 = (randDec1 == 0) ? 1 : randDec1;
+      randDec2 = (randDec2 == 0) ? 1 : randDec2;
+
+      if (randDec1 < randDec2)
       {
-        bool success1 = RomanNumeral_FromDecimal(val1, j);
-        bool success2 = RomanNumeral_FromDecimal(val2, k);
-        if (success1 && success2)
+        randScratch = randDec2;
+        randDec2 = randDec1;
+        randDec1 = randScratch;
+      }
+       
+      success1 = RomanNumeral_FromDecimal(obj1, randDec1);
+      success2 = RomanNumeral_FromDecimal(obj2, randDec2);
+
+      ck_assert(success1 && success2);
+      if (success1 && success2)
+      {
+        success = RomanNumeral_Subtract(obj1, obj2, answer);
+        if (success)
         {
-          success = RomanNumeral_Subtract(val1, val2, answer);
+          success = RomanNumeral_Equals(answer, randDec1 - randDec2);
           ck_assert(success);
-          if (success)
-          {
-            success = RomanNumeral_Equals(answer, j - k);
-            ck_assert(success);
-          }
+        }
+        else
+        {
+          ck_assert(randDec1 == randDec2);
         }
       }
     }
-    RomanNumeral_free(val1);
-    RomanNumeral_free(val2);
+
+    RomanNumeral_free(obj1);
+    RomanNumeral_free(obj2);
     RomanNumeral_free(answer);
   }
 }
-
 END_TEST
 
 Suite* roman_numeral_obj_suite()

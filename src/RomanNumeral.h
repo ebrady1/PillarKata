@@ -31,13 +31,13 @@ extern RomanNumeral* RomanNumeral_new(const char* string);
 extern void RomanNumeral_free(RomanNumeral* obj);
 
 //Return the value of the object as integer
-extern int RomanNumeral_ToInt(RomanNumeral* obj);
+extern unsigned int RomanNumeral_ToDecimal(RomanNumeral* obj);
 
 //Return the Roman Number String
 extern char* RomanNumeral_ToString(RomanNumeral* obj);
 
 //Set the value of the object from a RomanNumeral string
-extern int RomanNumeral_FromRomanString(RomanNumeral* obj, const char* str);
+extern unsigned int RomanNumeral_FromRomanString(RomanNumeral* obj, const char* str);
 
 //Set the value of the object from a Decimal string
 extern bool RomanNumeral_FromDecimal(RomanNumeral* obj, unsigned int value);

@@ -19,7 +19,7 @@ typedef const struct
 {
 //  const char* romanString;
   char romanString[BUFFER_SIZE];
-  int decValue;
+  unsigned int decValue;
 }COMMON_VAL;
 
 typedef struct
@@ -247,16 +247,16 @@ void RomanNumeral_free(RomanNumeral* obj)
 }
 
 /**
- * Member: RomanNumeral_ToInt
+ * Member: RomanNumeral_ToDecimal
  * Description: Returns the integer value of the RomanNumeral object 
  * Arg1: The RomanNumeral object to perform the operation on 
  * Returns: Integer value of the RomanNumeral object, returns 0 if 
  *          the object's value could not be decoded
  */
-int RomanNumeral_ToInt(RomanNumeral* obj)
+unsigned int RomanNumeral_ToDecimal(RomanNumeral* obj)
 {
   int curIndex = 0;
-  int retVal = 0;
+  unsigned int retVal = 0;
 
   //Test of the user supplied value is valid
   if (NULL != obj)
@@ -316,14 +316,14 @@ char* RomanNumeral_ToString(RomanNumeral* obj)
  * Arg2: The string to process
  * Returns: The decoded integer value, returns 0 if the decoding failed
  */
-int RomanNumeral_FromRomanString(RomanNumeral* obj, const char* str)
+unsigned int RomanNumeral_FromRomanString(RomanNumeral* obj, const char* str)
 {
    int decodedValue = 0;
    if ((NULL != obj) && (NULL != str))
    {
       strncpy(obj->romanValue,str, BUFFER_SIZE);
       obj->value = 0;
-      decodedValue = RomanNumeral_ToInt(obj);
+      decodedValue = RomanNumeral_ToDecimal(obj);
    }
    return decodedValue;
 }
@@ -395,7 +395,18 @@ bool RomanNumeral_FromDecimal(RomanNumeral* obj, unsigned int dec)
  */
 bool RomanNumeral_Add(RomanNumeral* val1, RomanNumeral* val2, RomanNumeral* answer)
 {
-  return false;
+  bool retVal = false;
+  unsigned int dec1 = 0;
+  unsigned int dec2 = 0;
+  unsigned int decAnswer = 0;
+
+  if ((NULL != val1) && (NULL != val2) && (NULL != answer))
+  {
+    dec1 = RomanNumeral_ToDecimal(val1);
+    dec2 = RomanNumeral_ToDecimal(val2);
+    retVal = RomanNumeral_FromDecimal(answer,dec1 + dec2);
+  }
+  return retVal;
 }
 
 /**
@@ -409,7 +420,18 @@ bool RomanNumeral_Add(RomanNumeral* val1, RomanNumeral* val2, RomanNumeral* answ
  */
 bool RomanNumeral_Subtract(RomanNumeral* val1, RomanNumeral* val2, RomanNumeral* answer)
 {
-  return false;
+  bool retVal = false;
+  unsigned int dec1 = 0;
+  unsigned int dec2 = 0;
+  unsigned int decAnswer = 0;
+
+  if ((NULL != val1) && (NULL != val2) && (NULL != answer))
+  {
+    dec1 = RomanNumeral_ToDecimal(val1);
+    dec2 = RomanNumeral_ToDecimal(val2);
+    retVal = RomanNumeral_FromDecimal(answer,dec1 - dec2);
+  }
+  return retVal;
 }
 
 
@@ -423,5 +445,12 @@ bool RomanNumeral_Subtract(RomanNumeral* val1, RomanNumeral* val2, RomanNumeral*
  */
 bool RomanNumeral_Equals(RomanNumeral* obj, unsigned int value)
 {
-  return false;
+  bool retVal = false;
+  if (NULL != obj)
+  {
+    unsigned int objVal = RomanNumeral_ToDecimal(obj);
+    retVal = (objVal == value);
+  }
+
+  return retVal;
 }
