@@ -42,4 +42,13 @@ extern int RomanNumeral_FromRomanString(RomanNumeral* obj, const char* str);
 //Set the value of the object from a Decimal string
 extern bool RomanNumeral_FromDecimal(RomanNumeral* obj, unsigned int value);
 
+//Add two Roman Numeral objects together
+extern bool RomanNumeral_Add(RomanNumeral* val1, RomanNumeral* val2, RomanNumeral* answer);
+
+//Subtract two Roman Numeral objects together
+extern bool RomanNumeral_Subtract(RomanNumeral* val1, RomanNumeral* val2, RomanNumeral* answer);
+
+//Check if the Roman Numeral is equal to the user supplied decimal value. 
+extern bool RomanNumeral_Equals(RomanNumeral* obj, unsigned int value);
+
 #endif

@@ -383,3 +383,45 @@ bool RomanNumeral_FromDecimal(RomanNumeral* obj, unsigned int dec)
 
   return retVal;
 }
+
+/**
+ * Member: RomanNumeral_Add
+ * Description: Adds two Numeral objects
+ * Arg1: Numeral #1 to add 
+ * Arg2: Numeral #2 to add
+ * Arg3: Answer
+ * Returns: true if the operation can be performed succesfully. 
+ *          false if the operation could not be completed succesfully
+ */
+bool RomanNumeral_Add(RomanNumeral* val1, RomanNumeral* val2, RomanNumeral* answer)
+{
+  return false;
+}
+
+/**
+ * Member: RomanNumeral_Add
+ * Description: Adds two Numeral objects
+ * Arg1: Numeral #1 to add 
+ * Arg2: Numeral #2 to add
+ * Arg3: Answer
+ * Returns: true if the operation can be performed succesfully. 
+ *          false if the operation could not be completed succesfully
+ */
+bool RomanNumeral_Subtract(RomanNumeral* val1, RomanNumeral* val2, RomanNumeral* answer)
+{
+  return false;
+}
+
+
+/**
+ * Member: RomanNumeral_Add
+ * Description: Check if the Roman Numeral is equal to the user supplied decimal value. 
+ * Arg1: Object to check 
+ * Arg2: Decimal value to check against 
+ * Returns: true if the object's value is equal to the user supplied number
+ *          false if not equal, or an invalid object/decimal value was passed 
+ */
+bool RomanNumeral_Equals(RomanNumeral* obj, unsigned int value)
+{
+  return false;
+}

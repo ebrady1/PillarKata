@@ -195,43 +195,130 @@ START_TEST (CreateRomanNumeralWithInvalidRomanCharacters)
     
     RomanNumeral_FromRomanString(rn,NULL);
     ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
-
+  
+    RomanNumeral_free(rn);
   }
 }
 END_TEST
+
 //Test various scenarios of creating Roman Numeral objects,
 //In this test we will exercise all different digit types, along with
 //Variations of smaller digits occuring before larger digits.
 START_TEST (CreateRomanNumeralWithDecimalValue)
 {
-  RomanNumeral* obj = RomanNumeral_new("");
   int decodeVal = 0;
   bool success = false;
+  
+  RomanNumeral* obj = RomanNumeral_new("");
+  ck_assert(NULL != obj);
 
-  for (int j = 1; j <= 3999; j++)
+  if (NULL != obj)
   {
-    success = RomanNumeral_FromDecimal(obj,j);
-    ck_assert(true == success);
+    for (int j = 1; j <= 3999; j++)
+    {
+      success = RomanNumeral_FromDecimal(obj,j);
+      ck_assert(true == success);
 
-    decodeVal = RomanNumeral_ToInt(obj);
-    ck_assert_int_eq(j,decodeVal);
+      decodeVal = RomanNumeral_ToInt(obj);
+      ck_assert_int_eq(j,decodeVal);
+    }
+
+    success = RomanNumeral_FromDecimal(obj,0);
+    ck_assert(!success);
+    
+    success = RomanNumeral_FromDecimal(obj,4000);
+    ck_assert(!success);
+    
+    success = RomanNumeral_FromDecimal(obj,9999);
+    ck_assert(!success);
+    
+    success = RomanNumeral_FromDecimal(obj,99999);
+    ck_assert(!success);
+
+    RomanNumeral_free(obj);
   }
-
-  success = RomanNumeral_FromDecimal(obj,0);
-  ck_assert(!success);
-  
-  success = RomanNumeral_FromDecimal(obj,4000);
-  ck_assert(!success);
-  
-  success = RomanNumeral_FromDecimal(obj,9999);
-  ck_assert(!success);
-  
-  success = RomanNumeral_FromDecimal(obj,99999);
-  ck_assert(!success);
 }
 
 END_TEST
 
+
+START_TEST (RomanNumeralAdditionOps)
+{
+  bool success = false;
+  
+  RomanNumeral* val1 = RomanNumeral_new("");
+  RomanNumeral* val2 = RomanNumeral_new("");
+  RomanNumeral* answer = RomanNumeral_new("");
+  ck_assert((NULL != val1) && (NULL != val2) && (NULL != answer));
+
+  if ((NULL != val1) && (NULL != val2))
+  {
+    //Iterate through all possible combinations
+    for (unsigned int j = 0; j < 2000; j++)
+    {
+      for (unsigned 
+      
+      
+      int k = 0; k < 2000; k++)
+      {
+        bool success1 = RomanNumeral_FromDecimal(val1, j);
+        bool success2 = RomanNumeral_FromDecimal(val2, k);
+        if (success1 && success2)
+        {
+          success = RomanNumeral_Add(val1, val2, answer);
+          ck_assert(success);
+          if (success)
+          {
+            success = RomanNumeral_Equals(answer, j+k);
+            ck_assert(success);
+          }
+        }
+      }
+    }
+    RomanNumeral_free(val1);
+    RomanNumeral_free(val2);
+    RomanNumeral_free(answer);
+  }
+}
+END_TEST
+
+START_TEST (RomanNumeralSubtractionOps)
+{
+  bool success = false;
+  
+  RomanNumeral* val1 = RomanNumeral_new("");
+  RomanNumeral* val2 = RomanNumeral_new("");
+  RomanNumeral* answer = RomanNumeral_new("");
+  ck_assert((NULL != val1) && (NULL != val2) && (NULL != answer));
+
+  if ((NULL != val1) && (NULL != val2))
+  {
+    //Iterate through all possible combinations
+    for (unsigned int j = 3999; j > 2000; j--)
+    {
+      for (unsigned int k = 0; k < 2000; k++)
+      {
+        bool success1 = RomanNumeral_FromDecimal(val1, j);
+        bool success2 = RomanNumeral_FromDecimal(val2, k);
+        if (success1 && success2)
+        {
+          success = RomanNumeral_Subtract(val1, val2, answer);
+          ck_assert(success);
+          if (success)
+          {
+            success = RomanNumeral_Equals(answer, j - k);
+            ck_assert(success);
+          }
+        }
+      }
+    }
+    RomanNumeral_free(val1);
+    RomanNumeral_free(val2);
+    RomanNumeral_free(answer);
+  }
+}
+
+END_TEST
 
 Suite* roman_numeral_obj_suite()
 {
@@ -247,6 +334,9 @@ Suite* roman_numeral_obj_suite()
    tcase_add_test(tc_core, CreateRomanNumeralWithValidRomanCharacters);
    tcase_add_test(tc_core, CreateRomanNumeralWithInvalidRomanCharacters);
    tcase_add_test(tc_core, CreateRomanNumeralWithDecimalValue);
+   tcase_add_test(tc_core, RomanNumeralAdditionOps);
+   tcase_add_test(tc_core, RomanNumeralSubtractionOps);
+
    suite_add_tcase(s, tc_core);
 
    return s;
