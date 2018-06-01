@@ -67,6 +67,9 @@ START_TEST (CreateRomanNumeralWithValidRomanCharacters)
 
      RomanNumeral_FromRomanString(rn,"VIII");
      ck_assert_int_eq(RomanNumeral_ToInt(rn), 8);
+     
+     RomanNumeral_FromRomanString(rn,"VIV");
+     ck_assert_int_eq(RomanNumeral_ToInt(rn), 9);
 
      RomanNumeral_FromRomanString(rn,"IX");
      ck_assert_int_eq(RomanNumeral_ToInt(rn), 9);
@@ -154,10 +157,11 @@ START_TEST (CreateRomanNumeralWithValidRomanCharacters)
 }
 END_TEST
 
+//Test various scenarios of creating INVALID Roman Numeral objects,
 START_TEST (CreateRomanNumeralWithInvalidRomanCharacters)
 {
   //Initialize a Roman Numeral object with a value of 1
-  //Perform this for each valid character type
+  //Perform this for a number of Invalid Roman Numeral Types
   RomanNumeral* rn = RomanNumeral_new("");
   ck_assert(rn != NULL);
   if (NULL != rn)
@@ -183,28 +187,51 @@ START_TEST (CreateRomanNumeralWithInvalidRomanCharacters)
     RomanNumeral_FromRomanString(rn,"IVX");
     ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
 
+    RomanNumeral_FromRomanString(rn,"VV");
+    ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
+
+    RomanNumeral_FromRomanString(rn,"LL");
+    ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
     
+    RomanNumeral_FromRomanString(rn,NULL);
+    ck_assert_int_eq(RomanNumeral_ToInt(rn), 0);
 
   }
 }
-
 END_TEST
-
+//Test various scenarios of creating Roman Numeral objects,
+//In this test we will exercise all different digit types, along with
+//Variations of smaller digits occuring before larger digits.
 START_TEST (CreateRomanNumeralWithDecimalValue)
 {
+  RomanNumeral* obj = RomanNumeral_new("");
+  int decodeVal = 0;
+  bool success = false;
+
+  for (int j = 1; j <= 3999; j++)
+  {
+    success = RomanNumeral_FromDecimal(obj,j);
+    ck_assert(true == success);
+
+    decodeVal = RomanNumeral_ToInt(obj);
+    ck_assert_int_eq(j,decodeVal);
+  }
+
+  success = RomanNumeral_FromDecimal(obj,0);
+  ck_assert(!success);
+  
+  success = RomanNumeral_FromDecimal(obj,4000);
+  ck_assert(!success);
+  
+  success = RomanNumeral_FromDecimal(obj,9999);
+  ck_assert(!success);
+  
+  success = RomanNumeral_FromDecimal(obj,99999);
+  ck_assert(!success);
 }
 
 END_TEST
 
-START_TEST (CreateOutofBoundsRomanNumeral)
-{
-}
-END_TEST
-
-START_TEST (CreateOutofBoundsRomanNumeralWithDecimal)
-{
-}
-END_TEST
 
 Suite* roman_numeral_obj_suite()
 {
@@ -220,11 +247,7 @@ Suite* roman_numeral_obj_suite()
    tcase_add_test(tc_core, CreateRomanNumeralWithValidRomanCharacters);
    tcase_add_test(tc_core, CreateRomanNumeralWithInvalidRomanCharacters);
    tcase_add_test(tc_core, CreateRomanNumeralWithDecimalValue);
-   tcase_add_test(tc_core, CreateOutofBoundsRomanNumeral);
-   tcase_add_test(tc_core, CreateOutofBoundsRomanNumeralWithDecimal);
    suite_add_tcase(s, tc_core);
-
-
 
    return s;
 }

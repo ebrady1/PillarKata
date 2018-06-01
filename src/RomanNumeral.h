@@ -11,10 +11,14 @@
 #ifndef ROMANNUMERAL_H
 #define ROMANNUMERAL_H
 
+#include <stdbool.h>
+ 
+ #define BUFFER_SIZE 16
+
 typedef struct RomanNumeral
 {
-  int value;
-  const char* romanValue; 
+  unsigned int value;
+  char romanValue[BUFFER_SIZE]; 
 }RomanNumeral;
 
 //Instantiate a new Roman Numeral object 
@@ -36,6 +40,6 @@ extern char* RomanNumeral_ToString(RomanNumeral* obj);
 extern int RomanNumeral_FromRomanString(RomanNumeral* obj, const char* str);
 
 //Set the value of the object from a Decimal string
-extern int RomanNumeral_FromDecimalString(RomanNumeral* obj, const char* str);
+extern bool RomanNumeral_FromDecimal(RomanNumeral* obj, unsigned int value);
 
 #endif
