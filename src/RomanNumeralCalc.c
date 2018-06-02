@@ -112,6 +112,5 @@ int main(int argc, char* argv[])
 				printf("Invalid Expression!\n");
 			}
 		}
-		fflush(stdin);
 	}
 }
