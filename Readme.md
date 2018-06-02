@@ -1,21 +1,20 @@
-Author:  Ed Brady
-E-Mail: ed@ebrady.net
+# Roman Numeral Calculator
 
+This is my submission for the Embedded Application Kata - Roman Numeral Calculator
+This exercise is based on the Roman Numeral Calculator Kata at http://bit.ly/1VfHqlj.
 
-Roman Numeral Calculator
+## Getting Started
+These will get you a copy of the project up and running on your local machine for review and testing purposes. 
 
-This is my submission for the Embedded Application Kata -
-Roman Numeral Calculator
-
-This exercise is based on the Roman Numeral Calculator Kata at
-http://bit.ly/1VfHqlj.
-
+## Prerequisites
+```
 OS:  Ubuntu Linux 14.04.05 LTS
 Compiler: gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.4)
+```
 
----- Building ----
-
+## Building 
 To build the program an all test suites:
+```
 cd RomanNumeralCalc
 make            - Makes all 
 make src        - Makes the Roman Numeral Calculator executable
@@ -23,15 +22,18 @@ make tests      - Makes a standalone executable for the tests
 make run        - Makes the Roman Numeral Calculator and starts it
 make run_test   - Makes the test executable and executes it
 make clean      - Cleans the build directoy
+```
 
-Build output
-
+##Build output
+```
 objs - Directory of compiled objects
 src - Source files for main executable
 tests - Source files for test suite libraries and main test runner
 bin - Compiled executable files for Calculator and Test runner
+```
 
-Files:
+## Files
+```
 Roman_Numeral_Calc
 bin
 \- RomanNumeralCalc         - Standalone Calculator 
@@ -52,5 +54,5 @@ src
  - check_RomanNumeralCalc.c - Calculator test cases
  - check_RomanNumeral.h     - Header for the RomanNumeral "object" test cases
  - check_RomanNumeral.c     - Implementation for the RomanNumeral "object" test cases.
-  
+ ``` 
 
