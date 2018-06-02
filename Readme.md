@@ -13,7 +13,8 @@ Compiler: gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.4)
 ```
 
 ## Building 
-To build the program an all test suites:
+
+To build the program and all test suites:
 ```
 cd RomanNumeralCalc
 make            - Makes all 
@@ -24,15 +25,32 @@ make run_test   - Makes the test executable and executes it
 make clean      - Cleans the build directoy
 ```
 
-##Build output
+## Build output
+
 ```
 objs - Directory of compiled objects
 src - Source files for main executable
 tests - Source files for test suite libraries and main test runner
 bin - Compiled executable files for Calculator and Test runner
 ```
+ ## Running the unit tests
+
+ ```
+ make 
+ cd /bin
+ ./RomanNumeralCalcTests
+ ```
+
+ ## Running the standalone calculator 
+
+ ```
+ make 
+ cd /bin
+ ./RomanNumeralCalc
+ ```
 
 ## Files
+
 ```
 Roman_Numeral_Calc
 bin
@@ -56,3 +74,6 @@ src
  - check_RomanNumeral.c     - Implementation for the RomanNumeral "object" test cases.
  ``` 
 
+## Authors
+
+* **Ed Brady** - [Roman Numeral Calculator](https://github.com/ebrady1/PillarKata)
