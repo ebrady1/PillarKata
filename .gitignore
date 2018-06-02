@@ -6,4 +6,4 @@ obj/
 *.swp
 tasks.json
 launch.json
-
+.vscode

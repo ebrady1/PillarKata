@@ -45,33 +45,44 @@ RNCALC_STATUS RomanNumeralCalc_processExpression(char* expression, char* answerB
 
 	if ((NULL != expression) && (NULL != answerBuffer))
 	{
+		//Make a copy of the expression
 		strncpy(buffer, expression, BUFFER_SIZE);
-		
+
+		//Determine if this is exclusively an add or subtract operation	
 		add = (strstr(buffer,PLUS_OP) != NULL);
 		subtract = (strstr(buffer,MINUS_OP) != NULL);
 		if ((add && !subtract) || (!add && subtract))
 		{
+			//Break up the expression into 2 values and an operator
 			currentChar = strtok(buffer, ALLOWED_OPERATIONS);
 			if (NULL != currentChar)
 			{
+				//Create a RomanNumeral object to represent the first value
+				//and ensure it is a valid Roman Numeral value 
 				val1 = RomanNumeral_new(currentChar);
 				if ((NULL != val1) && (RomanNumeral_IsValid(val1)))
 				{
 					currentChar = strtok(NULL,ALLOWED_OPERATIONS); 
 					if (NULL != currentChar)
 					{
+						//Create a RomanNumeral object to represent the second value
+						//and ensure it is a valid Roman Numeral value 
 						val2 = RomanNumeral_new(currentChar);
 						if ((NULL != val2) && (RomanNumeral_IsValid(val2)))
 						{
 							if (add)
 							{
+								//The caller wishes to add the two values together
 								success = RomanNumeral_Add(val1,val2,answer);
 							}
 							else
 							{
+								//The caller wishes to subtract the two values
 								success = RomanNumeral_Subtract(val1, val2, answer);
 							}
 
+							//If the add/subtract operation was succesful, then set
+							//the return value accordingly. 
 							if (success)
 							{
 								retVal = RNCALC_OK;
@@ -83,27 +94,32 @@ RNCALC_STATUS RomanNumeralCalc_processExpression(char* expression, char* answerB
 						}
 						else
 						{
+							//The 2nd value in the expression is not valid
 							retVal = RNCALC_VAL2_INVALID;
 						}
 					}
 				}
 				else
 				{
+					//The 2nd value in the expression is not valid
 					retVal = RNCALC_VAL1_INVALID;
 				}
 			}
 		}
 		else
 		{
+			//The whole expression is invalid
 			retVal = RNCALC_EXPRESSION_INVALID;	
 		}
 	}
 
+	//If everyting is OK at this point convert the RomanNumeral object to a string and return
 	if (RNCALC_OK == retVal)
 	{
 		strncpy(answerBuffer,RomanNumeral_ToString(answer),RNCALC_MAX_ANSWER_SIZE);
 	}
 
+	//Clean up to prevent memory leaks
 	RomanNumeral_free(answer);
 	return retVal;
 }

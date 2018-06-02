@@ -43,12 +43,14 @@ START_TEST (CreateRomanNumeralWithValidRomanCharacters)
 {
   printf("-- CreateRomanNumeralWithValidRomanCharacters --\n");
   
-  //Initialize a Roman Numeral object with a value of 1
+  //Initialize a Roman Numeral object
   //Perform this for each valid character type
   RomanNumeral* rn = RomanNumeral_new("");
   ck_assert(rn != NULL);
   if (NULL != rn)
   {
+    //Try a number of static strings, verify they are all
+    //convertable back to a decimal to signify passing
      RomanNumeral_FromRomanString(rn,"I");
      ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 1);
 
@@ -164,12 +166,13 @@ START_TEST (CreateRomanNumeralWithInvalidRomanCharacters)
 {
   printf("-- CreateRomanNumeralWithInvalidRomanCharacters --\n");
   
-  //Initialize a Roman Numeral object with a value of 1
-  //Perform this for a number of Invalid Roman Numeral Types
   RomanNumeral* rn = RomanNumeral_new("");
   ck_assert(rn != NULL);
   if (NULL != rn)
   {
+    //Initialize a number of RomanNumeral objects with an 
+    //invalid value and verify they will not convert back
+    //to a demal. RomanNumeral_ToDecimal will return 0
     RomanNumeral_FromRomanString(rn,"A");
     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 0);
     
@@ -219,6 +222,7 @@ START_TEST (CreateRomanNumeralWithDecimalValue)
 
   if (NULL != obj)
   {
+    //Iterate all Roman digits between 1 and 3999 and check for success
     for (int j = 1; j <= 3999; j++)
     {
       success = RomanNumeral_FromDecimal(obj,j);
@@ -228,9 +232,10 @@ START_TEST (CreateRomanNumeralWithDecimalValue)
       ck_assert_int_eq(j,decodeVal);
     }
 
+    //Check invalid values
     success = RomanNumeral_FromDecimal(obj,0);
     ck_assert(!success);
-    
+
     success = RomanNumeral_FromDecimal(obj,4000);
     ck_assert(!success);
     
@@ -248,6 +253,7 @@ END_TEST
 
 START_TEST (RomanNumeralAdditionOps)
 {
+  //Tests that a RomanNumeral object can be added to another. 
   printf("-- RomanNumeralAdditionOps --\n");
   bool success = false;
   bool success1 = false;
@@ -264,6 +270,7 @@ START_TEST (RomanNumeralAdditionOps)
   {
 
     //Seed the test with 10000 random numbers
+    //Add these, and verify that a valid result is returned.
     for (unsigned int j = 1; j < 10000; j++)
     {
       randDec1 = (unsigned int)rand() % 2000;
@@ -311,8 +318,8 @@ START_TEST (RomanNumeralSubtractionOps)
 
   if ((NULL != obj1) && (NULL != obj2))
   {
-
     //Seed the test with 10000 random numbers 
+    //Subtract these, and verify that a valid result is returned.
     for (unsigned int j = 1; j < 10000; j++)
     {
       randDec1 = (unsigned int)rand() % 4000;
@@ -354,6 +361,7 @@ START_TEST (RomanNumeralSubtractionOps)
 }
 END_TEST
 
+//Th object test suite
 Suite* roman_numeral_obj_suite()
 {
   Suite *s;

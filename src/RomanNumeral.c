@@ -234,6 +234,8 @@ RomanNumeral* RomanNumeral_new(char* value)
 {
   RomanNumeral* returnVal = NULL;
   RomanNumeral* rnObj = (RomanNumeral*) malloc(sizeof(RomanNumeral));
+
+  //Allocate memory for the internal scratchpad
   if (NULL != rnObj)
   {
     memset(rnObj,0,sizeof(RomanNumeral));
@@ -242,6 +244,7 @@ RomanNumeral* RomanNumeral_new(char* value)
 
   if (NULL != value)
   {
+    //Take the user supplied value, remove whitespace and covert to upper case
     value = RomanNumeral_trim(value);
     value = RomanNumeral_toUpper(value);
     strncpy(rnObj->romanValue, value, BUFFER_SIZE);
@@ -295,13 +298,13 @@ unsigned int RomanNumeral_ToDecimal(RomanNumeral* obj)
         }
       }
     }
-
+    //If we did not make it all the way thru the user supplied string
+    //then set the return value to 0 (which is an invalid RomanNumeral digit)
     if ((curIndex != lenTarget) || (retVal < 1) || (retVal > 3999))
     {
       retVal = 0;
     }
   }
-
   return retVal;
 }
 
@@ -337,6 +340,8 @@ unsigned int RomanNumeral_FromRomanString(RomanNumeral* obj, const char* str)
    int decodedValue = 0;
    if ((NULL != obj) && (NULL != str))
    {
+     //Make a copy of the user supplied string, convert to Upper case and 
+     //convert it to a decimal value
       strncpy(obj->romanValue,str, BUFFER_SIZE);
       RomanNumeral_toUpper(obj->romanValue);
       obj->value = 0;
@@ -392,7 +397,6 @@ bool RomanNumeral_FromDecimal(RomanNumeral* obj, unsigned int dec)
     }
     if (0 == workVal)
     {
-
       strncpy(obj->romanValue, buffer, BUFFER_SIZE);
       retVal = true;
     }
@@ -417,6 +421,8 @@ bool RomanNumeral_Add(RomanNumeral* val1, RomanNumeral* val2, RomanNumeral* answ
   unsigned int dec2 = 0;
   unsigned int decAnswer = 0;
 
+  //Take the two values, convert to Decimal, add together, then create the
+  // answer RomanNumeral object from that value
   if ((NULL != val1) && (NULL != val2) && (NULL != answer))
   {
     dec1 = RomanNumeral_ToDecimal(val1);
@@ -427,10 +433,10 @@ bool RomanNumeral_Add(RomanNumeral* val1, RomanNumeral* val2, RomanNumeral* answ
 }
 
 /**
- * Member: RomanNumeral_Add
+ * Member: RomanNumeral_Subtract
  * Description: Adds two Numeral objects
- * Arg1: Numeral #1 to add 
- * Arg2: Numeral #2 to add
+ * Arg1: Numeral #1 to subtract 
+ * Arg2: Numeral #2 to subtract 
  * Arg3: Answer
  * Returns: true if the operation can be performed succesfully. 
  *          false if the operation could not be completed succesfully
@@ -444,6 +450,8 @@ bool RomanNumeral_Subtract(RomanNumeral* val1, RomanNumeral* val2, RomanNumeral*
 
   if ((NULL != val1) && (NULL != val2) && (NULL != answer))
   {
+    //Take the two values, convert to Decimal, subtract, then create the
+    // answer RomanNumeral object from that value
     dec1 = RomanNumeral_ToDecimal(val1);
     dec2 = RomanNumeral_ToDecimal(val2);
     retVal = RomanNumeral_FromDecimal(answer,dec1 - dec2);

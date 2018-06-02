@@ -1,11 +1,10 @@
 /**
- * @Author: Ed Brady <ed>
- * @Date:   2018-05-27T10:29:39-04:00
- * @Email:  ed@ebrady.net
- * @Project: Pillar Technologies Roman Numeral Kata
- * @Filename: RomanNumeralCalc.c
- * @Last modified by:   ed
- * @Last modified time: 2018-05-28T08:26:03-04:00
+ * @file	main. 
+ * @author: Ed Brady <ed>
+ * @date:   2018-05-27T10:29:39-04:00
+ * @email:  ed@ebrady.net
+ * @brief:	main executable fr Pillar Technologies Roman Numeral Kata
+ * @see:	https://github.com/PillarTechnology/kata-roman-numeral-calculator
  */
 
 #include <stdio.h>
@@ -17,6 +16,9 @@
 static char buffer[BUFFSIZE];
 static char answer[RNCALC_MAX_ANSWER_SIZE];
 
+/**
+ * @brief Read a calculator expression from the keyboard
+ */
 static bool readExpression(char* buff, int size)
 {
 	bool retVal = false;
@@ -36,7 +38,10 @@ static bool readExpression(char* buff, int size)
 	return retVal;
 }
 
-//Compile to run Calculator as a standalone executable.
+/**
+ * @brief Compile to run Calculator as a standalone executable.
+ */
+
 int main(int argc, char* argv[])
 {
 	RNCALC_STATUS status;
