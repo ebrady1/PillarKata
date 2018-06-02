@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+
 #include "RomanNumeral.h"
 
 
@@ -38,45 +40,22 @@ static COMMON_VAL DECODE_ORDER[] =
   { "MMM",  3000  },
   { "MM",   2000  },
   { "M",    1000  },
-  { "IM",   999   },
-  { "VM",   995   },
-  { "XM",   990   },
-  { "LM",   950   },
   { "CM",   900   },
-  { "DM",   500   },
   { "DCCC", 800   },
   { "DCC",  700   },
   { "DC",   600   },
-  { "ID",   499   },
-  { "VD",   495   },
   { "CD",   400   },
-  { "LD",   450   },
-  { "XD",   490   },
-  { "VD",   495   },
-  { "ID",   499   },
   { "D",    500   },
   { "XC",   90    },
-  { "VC",   95    },
-  { "IC",   99    },
   { "CCC",  300   },
   { "CC",   200   },
-  { "CLC",  150   },
   { "CXC",  190   },
-  { "CVC",  195   },
-  { "CIC",  199   },
   { "C",    100   },
-  { "LC",   50    },
   { "XC",   90    },
-  { "VC",   95    },
-  { "IC",   99    },
   { "LXL",  90    },
-  { "LVL",  95    },
-  { "LIL",  99    },
   { "LXXX", 80    },
   { "LXX ", 70    },
   { "LX",   60    },
-  { "IL",   49    },
-  { "VL",   45    },
   { "XL",   40    },
   { "L",    50    },
   { "XXX",  30    },
@@ -116,19 +95,11 @@ static const COMMON_VAL ENCODE_1000_LIST[] =
 //positional placement in the array, do not re-order 
 static const COMMON_VAL ENCODE_100_LIST[] = 
 {
-  { "IM",   999   },
-  { "VM",   995   },
-  { "XM",   990   },
-  { "LM",   950   },
   { "CM",   900   },
   { "DCCC", 800   },
   { "DCC",  700   },
   { "DC",   600   },
   { "D",    500   },
-  { "ID",   499   },
-  { "VD",   495   },
-  { "XD",   490   },
-  { "LD",   450   },
   { "CD",   400   },
   { "CCC",  300   },
   { "CC",   200   },
@@ -140,17 +111,12 @@ static const COMMON_VAL ENCODE_100_LIST[] =
 //positional placement in the array, do not re-order 
 static const COMMON_VAL ENCODE_10_LIST[] = 
 {
-  { "IC",   99    },
-  { "VC",   95    },
   { "XC",   90    },
   { "LXL",  90    },
-  { "LVL",  95    },
   { "LXXX", 80    },
   { "LXX ", 70    },
   { "LX",   60    },
   { "L",    50    },
-  { "IL",   49    },
-  { "VL",   45    },
   { "XL",   40    },
   { "XXX",  30    },
   { "XX",   20    },
@@ -187,6 +153,55 @@ static const ENCODER_ENTRY_INFO VAL_ENCODERS[] =
 
 // ----------  Static (Private) object functions --------------
 
+/**
+ * Member: RomanNumeral_toUpper
+ * Description: Convert the user supplied string to Upper Case
+ * Arg1: string to process
+ * Returns:  The processed string
+ */
+static char* RomanNumeral_toUpper(char* string)
+{
+  char* workPtr = string;
+  while(*workPtr)
+  {
+    *workPtr = toupper(*workPtr);
+    workPtr++;
+  }
+  return string;
+
+}
+
+/**
+ * Member: RomanNumeral_trim
+ * Description: Remove all whitespace, before and after the suplied string
+ * Arg1: string to process
+ * Returns:  The processed string
+ */
+static char* RomanNumeral_trim(char* string)
+{
+  char* last;
+
+  //Trim whitespace at the start of a line
+  while(isspace((unsigned char)*string))
+  {
+    string++;
+  }
+
+  if (*string != 0)
+  {
+    //Trim whitespace at the end of the line
+    last = string + strlen(string) - 1;
+
+    while(last > string && isspace((unsigned char)*last))
+    {
+      last--;
+    }
+
+    *(last+1) = 0;
+  }
+
+  return string;
+}
 
 /**
  * Member: RomanNumeral_startsWith
@@ -215,10 +230,9 @@ static bool RomanNumeral_startsWith(RomanNumeral* obj, const char* searchStr, co
  * Description: Instantiates a new RomanNumeral object
  * Arg1: Optional string value to initialize RomanNumreal object with
  */
-RomanNumeral* RomanNumeral_new(const char* value)
+RomanNumeral* RomanNumeral_new(char* value)
 {
   RomanNumeral* returnVal = NULL;
-
   RomanNumeral* rnObj = (RomanNumeral*) malloc(sizeof(RomanNumeral));
   if (NULL != rnObj)
   {
@@ -228,7 +242,9 @@ RomanNumeral* RomanNumeral_new(const char* value)
 
   if (NULL != value)
   {
-     strncpy(rnObj->romanValue, value, BUFFER_SIZE);
+    value = RomanNumeral_trim(value);
+    value = RomanNumeral_toUpper(value);
+    strncpy(rnObj->romanValue, value, BUFFER_SIZE);
   }
   return returnVal;
 }
@@ -300,7 +316,7 @@ char* RomanNumeral_ToString(RomanNumeral* obj)
   char* retVal = "";
   if ((NULL != obj) && 
       (0 != obj->romanValue[0]) && 
-      (strcmp(obj->romanValue,"") == 0))
+      (strcmp(obj->romanValue,"") != 0))
   {
     retVal = obj->romanValue;
   }
@@ -322,6 +338,7 @@ unsigned int RomanNumeral_FromRomanString(RomanNumeral* obj, const char* str)
    if ((NULL != obj) && (NULL != str))
    {
       strncpy(obj->romanValue,str, BUFFER_SIZE);
+      RomanNumeral_toUpper(obj->romanValue);
       obj->value = 0;
       decodedValue = RomanNumeral_ToDecimal(obj);
    }
@@ -436,7 +453,7 @@ bool RomanNumeral_Subtract(RomanNumeral* val1, RomanNumeral* val2, RomanNumeral*
 
 
 /**
- * Member: RomanNumeral_Add
+ * Member: RomanNumeral_Equals
  * Description: Check if the Roman Numeral is equal to the user supplied decimal value. 
  * Arg1: Object to check 
  * Arg2: Decimal value to check against 
@@ -453,4 +470,15 @@ bool RomanNumeral_Equals(RomanNumeral* obj, unsigned int value)
   }
 
   return retVal;
+}
+
+/**
+ * Member: RomanNumeral_IsValid
+ * Description: Check if the Roman Numeral contains a valid value and has a valid syntax
+ * Arg1: Object to check 
+ * Returns: true if the object's is valid and has a valid syntax
+ */
+bool RomanNumeral_IsValid(RomanNumeral* obj)
+{
+  return (RomanNumeral_ToDecimal(obj) != 0);
 }

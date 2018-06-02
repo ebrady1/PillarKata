@@ -25,7 +25,7 @@ typedef struct RomanNumeral
 //Object can be either empty or initialized from a Roman Numeral Strig
 //If a non standard Roman Numeral string is set, then an empty object 
 //is created
-extern RomanNumeral* RomanNumeral_new(const char* string);
+extern RomanNumeral* RomanNumeral_new(char* string);
 
 //Free an existing object
 extern void RomanNumeral_free(RomanNumeral* obj);
@@ -50,5 +50,8 @@ extern bool RomanNumeral_Subtract(RomanNumeral* val1, RomanNumeral* val2, RomanN
 
 //Check if the Roman Numeral is equal to the user supplied decimal value. 
 extern bool RomanNumeral_Equals(RomanNumeral* obj, unsigned int value);
+
+//Check if the Roman Numeral is valid and has a valid syntax
+extern bool RomanNumeral_IsValid(RomanNumeral* obj);
 
 #endif

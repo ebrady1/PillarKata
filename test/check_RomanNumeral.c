@@ -133,17 +133,11 @@ START_TEST (CreateRomanNumeralWithValidRomanCharacters)
      RomanNumeral_FromRomanString(rn,"C");
      ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 100);
 
-     RomanNumeral_FromRomanString(rn,"VC");
-     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 95);
-
      RomanNumeral_FromRomanString(rn,"CX");
      ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 110);
 
      RomanNumeral_FromRomanString(rn,"D");
      ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 500);
-
-     RomanNumeral_FromRomanString(rn,"LD");
-     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 450);
 
      RomanNumeral_FromRomanString(rn,"M");
      ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 1000);
@@ -155,6 +149,9 @@ START_TEST (CreateRomanNumeralWithValidRomanCharacters)
      ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 1005);
 
      RomanNumeral_FromRomanString(rn,"MMMCMXCIX");
+     ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 3999);
+     
+     RomanNumeral_FromRomanString(rn,"mmMCMXcIX");
      ck_assert_int_eq(RomanNumeral_ToDecimal(rn), 3999);
     RomanNumeral_free(rn);
 
