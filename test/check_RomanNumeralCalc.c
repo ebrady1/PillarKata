@@ -11,21 +11,85 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <check.h>
-#include "../src/RomanNumeral.h"
+#include "../src/RomanNumeralCalc.h"
 
 //Test creation of RomanNumeral Calculator with Valid Expression
 START_TEST (RomanNumeralCalcWithValidExpressions)
 {
+  char answer[RNCALC_MAX_ANSWER_SIZE];
+  RNCALC_STATUS status;
+
   printf("-- Checking Roman Numeral Calculator with Valid Expressions--\n");
-  ck_assert(false);
+  status = RomanNumeralCalc_processExpression("I + I", answer);
+  ck_assert(RNCALC_OK == status);
+  ck_assert(strncmp(answer,"II",RNCALC_MAX_ANSWER_SIZE) == 0);
+  
+  status = RomanNumeralCalc_processExpression("i + i", answer);
+  ck_assert(RNCALC_OK == status);
+  ck_assert(strncmp(answer,"II",RNCALC_MAX_ANSWER_SIZE) == 0);
+  
+  status = RomanNumeralCalc_processExpression("IX + M", answer);
+  ck_assert(RNCALC_OK == status);
+  ck_assert(strncmp(answer,"MIX",RNCALC_MAX_ANSWER_SIZE) == 0);
+  
+  status = RomanNumeralCalc_processExpression("MMM + LIX", answer);
+  ck_assert(RNCALC_OK == status);
+  ck_assert(strncmp(answer,"MMMLIX",RNCALC_MAX_ANSWER_SIZE) == 0);
+  
+  status = RomanNumeralCalc_processExpression("mmm + LIX", answer);
+  ck_assert(RNCALC_OK == status);
+  ck_assert(strncmp(answer,"MMMLIX",RNCALC_MAX_ANSWER_SIZE) == 0);
+
+  status = RomanNumeralCalc_processExpression("MMM - I", answer);
+  ck_assert(RNCALC_OK == status);
+  ck_assert(strncmp(answer,"MMCMXCIX",RNCALC_MAX_ANSWER_SIZE) == 0);
+  
+  status = RomanNumeralCalc_processExpression("MMM - i", answer);
+  ck_assert(RNCALC_OK == status);
+  ck_assert(strncmp(answer,"MMCMXCIX",RNCALC_MAX_ANSWER_SIZE) == 0);
+  
+  status = RomanNumeralCalc_processExpression("X - VI", answer);
+  ck_assert(RNCALC_OK == status);
+  ck_assert(strncmp(answer,"IV",RNCALC_MAX_ANSWER_SIZE) == 0);
 }
 END_TEST
 
 //Test creation of RomanNumeral Calculator with Valid Expression
 START_TEST (RomanNumeralCalcWithInvalidExpressions)
 {
+  char answer[RNCALC_MAX_ANSWER_SIZE];
+  RNCALC_STATUS status;
+
   printf("-- Checking Roman Numeral Calculator with InValid Expressions--\n");
-  ck_assert(false);
+
+  //Value #1 is out of range
+  status = RomanNumeralCalc_processExpression("MMMM + I", answer);
+  ck_assert(RNCALC_VAL1_INVALID == status);
+  
+  //Value #1 is invalid
+  status = RomanNumeralCalc_processExpression("AAddfad + I", answer);
+  ck_assert(RNCALC_VAL1_INVALID == status);
+  
+  //Value #2 is out of range
+  status = RomanNumeralCalc_processExpression("I + MMMM", answer);
+  ck_assert(RNCALC_VAL2_INVALID == status);
+  
+  //Value #2 is INVALID 
+  status = RomanNumeralCalc_processExpression("I + adfbFFFj", answer);
+  ck_assert(RNCALC_VAL2_INVALID == status);
+  
+  //Expression is Invalid
+  status = RomanNumeralCalc_processExpression("I / I", answer);
+  ck_assert(RNCALC_EXPRESSION_INVALID == status);
+  
+  //Expression Result is out of range 
+  status = RomanNumeralCalc_processExpression("MMM + M", answer);
+  ck_assert(RNCALC_NONVALID_RESULT == status);
+  
+  //Expression Result is out of range 
+  status = RomanNumeralCalc_processExpression("I - II", answer);
+  ck_assert(RNCALC_NONVALID_RESULT == status);
+  
 }
 END_TEST
 
