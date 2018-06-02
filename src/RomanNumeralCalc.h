@@ -15,11 +15,11 @@
 
 typedef enum
 {
-  RNCALC_OK,
-  RNCALC_NONVALID_RESULT,
-  RNCALC_VAL2_INVALID,
-  RNCALC_VAL1_INVALID,
-  RNCALC_EXPRESSION_INVALID
+  RNCALC_OK,                //Expression processed OK
+  RNCALC_NONVALID_RESULT,   //Expression processed, but returned an invalid result
+  RNCALC_VAL2_INVALID,      //Value #2 of the expression was invalid
+  RNCALC_VAL1_INVALID,      //Value #1 of the expression was invalid
+  RNCALC_EXPRESSION_INVALID //The expression was invalid
 }RNCALC_STATUS;
 
 //Process the user supplied Expression
